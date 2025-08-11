@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "Backend/todo/pyproject.toml",
+      "use": "@vercel/python",
+      "config": {
+        "workPath": "Backend/todo",
+        "entrypoint": "src.todo.main:app" 
+      }
+    },
+    
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "workPath": "frontend"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "Backend/todo/src/todo/main.py"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend"
+    }
+  ]
+}
